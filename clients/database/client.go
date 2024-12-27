@@ -8,24 +8,24 @@ import (
 	"github.com/layerpro/upload-download-backend/configs"
 )
 
-func Connection() (*sql.DB, error) {
+func Connection(config configs.Config) (*sql.DB, error) {
 	conStr := fmt.Sprintf(
 		`user=%s password=%s dbname=%s port=%s sslmode=%s`,
-		configs.AppConfig.DB_USER,
-		configs.AppConfig.DB_PASSWORD,
-		configs.AppConfig.DB_NAME,
-		configs.AppConfig.DB_PORT,
-		configs.AppConfig.DB_SLLMODE,
+		config.Database.User,
+		config.Database.Password,
+		config.Database.Name,
+		config.Database.Port,
+		config.Database.SllMode,
 	)
-	con, err := sql.Open("postgres", conStr)
+	con, err := sql.Open(config.Database.Driver, conStr)
 	if err != nil {
 		log.Printf(`Failed to connection database: %v`, err)
 		return nil, err
 	}
 
-	con.SetMaxOpenConns(configs.AppConfig.DB_MAX_OPEN_CON)
-	con.SetMaxIdleConns(configs.AppConfig.DB_MAX_IDLE_CON)
-	con.SetConnMaxLifetime(configs.AppConfig.DB_MAX_LIFE_TIME)
+	con.SetMaxOpenConns(config.Database.MaxOpenCon)
+	con.SetMaxIdleConns(config.Database.MaxIdleCon)
+	con.SetConnMaxLifetime(config.Database.MaxLifeTime)
 
 	err = con.Ping()
 	if err != nil {

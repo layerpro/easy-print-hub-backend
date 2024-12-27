@@ -10,26 +10,53 @@ import (
 )
 
 type Config struct {
-	APP_PORT         string
-	DB_DRIVER        string
-	DB_PORT          string
-	DB_USER          string
-	DB_PASSWORD      string
-	DB_NAME          string
-	DB_SLLMODE       string
-	DB_MAX_OPEN_CON  int
-	DB_MAX_IDLE_CON  int
-	DB_MAX_LIFE_TIME time.Duration
+	App      App
+	Database Database
+	Jwt      Jwt
+	Redis    Redis
 }
 
-var AppConfig Config
-
-func LoadConfig() {
+func LoadConfig() Config {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf(`Error load .env file. %v`, err)
 	}
+	return Config{
+		App:      app(),
+		Database: database(),
+		Jwt:      jwt(),
+		Redis:    redis(),
+	}
+}
 
+type App struct {
+	Port string
+}
+
+func app() App {
+	port := os.Getenv(`APP_PORT`)
+	if port == `` {
+		port = `3000`
+	}
+
+	return App{
+		Port: port,
+	}
+}
+
+type Database struct {
+	Driver      string
+	Port        string
+	User        string
+	Password    string
+	Name        string
+	SllMode     string
+	MaxOpenCon  int
+	MaxIdleCon  int
+	MaxLifeTime time.Duration
+}
+
+func database() Database {
 	maxOpenCon, err := strconv.Atoi(os.Getenv(`DB_MAX_OPEN_CON`))
 	if err != nil {
 		maxOpenCon = 10
@@ -45,16 +72,46 @@ func LoadConfig() {
 		maxLifeTime = 30 * time.Minute
 	}
 
-	AppConfig = Config{
-		APP_PORT:         os.Getenv(`APP_PORT`),
-		DB_DRIVER:        os.Getenv(`DB_DRIVER`),
-		DB_PORT:          os.Getenv(`DB_PORT`),
-		DB_USER:          os.Getenv(`DB_USER`),
-		DB_PASSWORD:      os.Getenv(`DB_PASSWORD`),
-		DB_NAME:          os.Getenv(`DB_NAME`),
-		DB_SLLMODE:       os.Getenv(`DB_SLLMODE`),
-		DB_MAX_OPEN_CON:  maxOpenCon,
-		DB_MAX_IDLE_CON:  maxIdleCon,
-		DB_MAX_LIFE_TIME: maxLifeTime,
+	return Database{
+		Driver:      os.Getenv(`DB_DRIVER`),
+		Port:        os.Getenv(`DB_PORT`),
+		User:        os.Getenv(`DB_USER`),
+		Password:    os.Getenv(`DB_PASSWORD`),
+		Name:        os.Getenv(`DB_NAME`),
+		SllMode:     os.Getenv(`DB_SLLMODE`),
+		MaxOpenCon:  maxOpenCon,
+		MaxIdleCon:  maxIdleCon,
+		MaxLifeTime: maxLifeTime,
+	}
+}
+
+type Jwt struct {
+	SecretAccessToken string
+	TtlAccessToken    int
+}
+
+func jwt() Jwt {
+	ttlAccessToken, err := strconv.Atoi(os.Getenv(`JWT_TTL_ACCESS_TOKEN`))
+	if err != nil {
+		ttlAccessToken = 7200
+	}
+
+	return Jwt{
+		SecretAccessToken: os.Getenv(`JWT_SECRET_ACCESS_TOKEN`),
+		TtlAccessToken:    ttlAccessToken,
+	}
+}
+
+type Redis struct {
+	Host     string
+	Port     string
+	Password string
+}
+
+func redis() Redis {
+	return Redis{
+		Host:     os.Getenv(`REDIS_HOST`),
+		Port:     os.Getenv(`REDIS_PORT`),
+		Password: os.Getenv(`REDIS_PASSWORD`),
 	}
 }
