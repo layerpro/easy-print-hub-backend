@@ -7,6 +7,8 @@ const (
 	ErrBodyDecode           = `Failed to decode request body.`
 	ErrDataNotFound         = `Data not found.`
 	ErrInternalServerError  = `Internal server error`
+	ErrUnauthorized         = `Unauthorized`
+	ErrTokenExpired         = `Token expired`
 
 	SuccessOk     = `OK`
 	SuccessCrated = `Created`

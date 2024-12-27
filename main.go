@@ -30,6 +30,7 @@ func main() {
 	routes := mux.NewRouter()
 
 	router.SetupAuthrouter(routes, db, jwt)
+	router.SetupProfileRouter(routes, db, jwt)
 
 	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // Ubah sesuai domain front-end Anda
