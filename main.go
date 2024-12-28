@@ -6,6 +6,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/layerpro/upload-download-backend/clients/database"
+	"github.com/layerpro/upload-download-backend/clients/redisclient"
 	"github.com/layerpro/upload-download-backend/clients/validator"
 	"github.com/layerpro/upload-download-backend/configs"
 	"github.com/layerpro/upload-download-backend/domains/router"
@@ -26,11 +27,13 @@ func main() {
 	defer db.Close()
 
 	jwt := utils.NewJwt(conf)
+	redis := redisclient.Connect(conf)
+	authMiddleware := utils.AuthMiddleware(jwt, redis)
 
 	routes := mux.NewRouter()
 
-	router.SetupAuthrouter(routes, db, jwt)
-	router.SetupProfileRouter(routes, db, jwt)
+	router.SetupAuthrouter(routes, db, jwt, redis, authMiddleware)
+	router.SetupProfileRouter(routes, db, authMiddleware)
 
 	corsMiddleware := cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"}, // Ubah sesuai domain front-end Anda

@@ -1,22 +1,28 @@
 package auth
 
 import (
+	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/layerpro/upload-download-backend/utils"
+	"github.com/redis/go-redis/v9"
 )
 
 type Service struct {
-	repo Repository
-	jwt  *utils.JwtConfig
+	repo  Repository
+	jwt   *utils.JwtConfig
+	redis *redis.Client
 }
 
-func NewService(repo Repository, jwtConfig *utils.JwtConfig) Service {
+func NewService(repo Repository, jwtConfig *utils.JwtConfig, redis *redis.Client) Service {
 	return Service{
-		repo: repo,
-		jwt:  jwtConfig,
+		repo:  repo,
+		jwt:   jwtConfig,
+		redis: redis,
 	}
 }
 
@@ -52,4 +58,16 @@ func (s Service) SignIn(data SignIn) (*ResponseSignIn, error) {
 	}
 
 	return &response, nil
+}
+
+func (s Service) SignOut(token string) error {
+	redisKey := fmt.Sprintf(`expired-%s`, token)
+	redisDuration := time.Second * time.Duration(s.jwt.GetTtl())
+
+	err := s.redis.Set(context.Background(), redisKey, true, redisDuration).Err()
+	if err != nil {
+		log.Printf(`Error set redis. %v`, err)
+		return err
+	}
+	return nil
 }

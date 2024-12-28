@@ -44,3 +44,18 @@ func (h Handler) SignIn(w http.ResponseWriter, r *http.Request) {
 
 	utils.ResponseSuccess(w, http.StatusOK, utils.SuccessOk, signIn)
 }
+
+func (h Handler) SignOut(w http.ResponseWriter, r *http.Request) {
+	accessToken := utils.GetBearerToken(r)
+	if accessToken == "" {
+		utils.ResponseError(w, http.StatusBadRequest, utils.ErrGetProfile)
+		return
+	}
+
+	err := h.service.SignOut(accessToken)
+	if err != nil {
+		utils.ResponseError(w, http.StatusInternalServerError, utils.ErrUnauthorized)
+		return
+	}
+	utils.ResponseSuccess(w, http.StatusOK, utils.SuccessOk, nil)
+}

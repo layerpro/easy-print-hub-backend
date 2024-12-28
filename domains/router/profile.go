@@ -6,16 +6,15 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/layerpro/upload-download-backend/domains/profile"
-	"github.com/layerpro/upload-download-backend/utils"
 )
 
-func SetupProfileRouter(router *mux.Router, db *sql.DB, jwt *utils.JwtConfig) *mux.Router {
+func SetupProfileRouter(router *mux.Router, db *sql.DB, authMiddleware func(http.Handler) http.Handler) *mux.Router {
 	profileRepo := profile.NewRepository(db)
 	profileService := profile.NewService(profileRepo)
 	profileHandler := profile.NewHandler(profileService)
 
 	profileRouter := router.NewRoute().Subrouter()
-	profileRouter.Use(utils.AuthMiddleware(jwt))
+	profileRouter.Use(authMiddleware)
 
 	profileRouter.HandleFunc(`/profile`, profileHandler.GetProfile).Methods(http.MethodGet)
 

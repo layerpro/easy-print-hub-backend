@@ -72,3 +72,7 @@ func (config JwtConfig) VerifyAccessToken(tokenString string) (*JwtDecodeInterfa
 
 	return claims, nil
 }
+
+func (config JwtConfig) GetTtl() int {
+	return config.ttl
+}
