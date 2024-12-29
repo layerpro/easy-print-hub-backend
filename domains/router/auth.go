@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/layerpro/upload-download-backend/domains/auth"
-	"github.com/layerpro/upload-download-backend/utils"
+	"github.com/layerpro/easy-print-hub-backend/domains/auth"
+	"github.com/layerpro/easy-print-hub-backend/utils"
 	"github.com/redis/go-redis/v9"
 )
 

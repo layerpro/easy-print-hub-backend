@@ -3,7 +3,7 @@ package profile
 import (
 	"net/http"
 
-	"github.com/layerpro/upload-download-backend/utils"
+	"github.com/layerpro/easy-print-hub-backend/utils"
 )
 
 type Handler struct {

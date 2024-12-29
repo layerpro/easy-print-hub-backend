@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"github.com/go-playground/validator/v10"
-	configValidator "github.com/layerpro/upload-download-backend/clients/validator"
+	configValidator "github.com/layerpro/easy-print-hub-backend/clients/validator"
 )
 
 func Validator(data any) (string, error) {

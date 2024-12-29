@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/layerpro/upload-download-backend/domains/profile"
+	"github.com/layerpro/easy-print-hub-backend/domains/profile"
 )
 
 func SetupProfileRouter(router *mux.Router, db *sql.DB, authMiddleware func(http.Handler) http.Handler) *mux.Router {

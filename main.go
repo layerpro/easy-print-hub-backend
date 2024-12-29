@@ -5,12 +5,12 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	"github.com/layerpro/upload-download-backend/clients/database"
-	"github.com/layerpro/upload-download-backend/clients/redisclient"
-	"github.com/layerpro/upload-download-backend/clients/validator"
-	"github.com/layerpro/upload-download-backend/configs"
-	"github.com/layerpro/upload-download-backend/domains/router"
-	"github.com/layerpro/upload-download-backend/utils"
+	"github.com/layerpro/easy-print-hub-backend/clients/database"
+	"github.com/layerpro/easy-print-hub-backend/clients/redisclient"
+	"github.com/layerpro/easy-print-hub-backend/clients/validator"
+	"github.com/layerpro/easy-print-hub-backend/configs"
+	"github.com/layerpro/easy-print-hub-backend/domains/router"
+	"github.com/layerpro/easy-print-hub-backend/utils"
 	_ "github.com/lib/pq"
 	"github.com/rs/cors"
 )

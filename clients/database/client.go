@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/layerpro/upload-download-backend/configs"
+	"github.com/layerpro/easy-print-hub-backend/configs"
 )
 
 func Connection(config configs.Config) (*sql.DB, error) {

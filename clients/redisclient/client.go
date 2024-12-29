@@ -3,7 +3,7 @@ package redisclient
 import (
 	"fmt"
 
-	"github.com/layerpro/upload-download-backend/configs"
+	"github.com/layerpro/easy-print-hub-backend/configs"
 	"github.com/redis/go-redis/v9"
 )
 

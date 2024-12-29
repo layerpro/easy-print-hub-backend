@@ -8,7 +8,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/layerpro/upload-download-backend/utils"
+	"github.com/layerpro/easy-print-hub-backend/utils"
 	"github.com/redis/go-redis/v9"
 )
 

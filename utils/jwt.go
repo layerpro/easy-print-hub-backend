@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/layerpro/upload-download-backend/configs"
+	"github.com/layerpro/easy-print-hub-backend/configs"
 )
 
 type PayloadJwt struct {

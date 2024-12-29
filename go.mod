@@ -1,4 +1,4 @@
-module github.com/layerpro/upload-download-backend
+module github.com/layerpro/easy-print-hub-backend
 
 go 1.23.3
 
