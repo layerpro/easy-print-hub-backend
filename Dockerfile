@@ -22,6 +22,7 @@ USER appuser
 
 WORKDIR /app
 COPY --from=builder /app/main .
+COPY .env .env
 
 # Expose the application port
 EXPOSE 8080
