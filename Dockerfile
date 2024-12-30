@@ -24,6 +24,8 @@ WORKDIR /app
 COPY --from=builder /app/main .
 COPY .env .env
 
+COPY wait-for-it.sh .
+
 # Expose the application port
 EXPOSE 8080
 
