@@ -10,7 +10,8 @@ import (
 
 func Connection(config configs.Config) (*sql.DB, error) {
 	conStr := fmt.Sprintf(
-		`user=%s password=%s dbname=%s port=%s sslmode=%s`,
+		`host=%s user=%s password=%s dbname=%s port=%s sslmode=%s`,
+		config.Database.Host,
 		config.Database.User,
 		config.Database.Password,
 		config.Database.Name,

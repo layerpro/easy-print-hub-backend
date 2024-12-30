@@ -46,6 +46,7 @@ func app() App {
 
 type Database struct {
 	Driver      string
+	Host        string
 	Port        string
 	User        string
 	Password    string
@@ -74,6 +75,7 @@ func database() Database {
 
 	return Database{
 		Driver:      os.Getenv(`DB_DRIVER`),
+		Host:        os.Getenv(`DB_HOST`),
 		Port:        os.Getenv(`DB_PORT`),
 		User:        os.Getenv(`DB_USER`),
 		Password:    os.Getenv(`DB_PASSWORD`),
