@@ -14,7 +14,7 @@ COPY . .
 RUN go build -o main .
 
 # Run stage
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 # Set a non-root user for better security
 RUN useradd -m appuser
